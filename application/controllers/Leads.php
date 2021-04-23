@@ -28,10 +28,13 @@ class Leads extends CI_Controller {
         $this->load->view("leads/index");
 	}
 
-	public function search(){
+	public function search_by_name(){
 		$name = $this->input->post("search");
+		// $from = $this->input->post("from");
+		// $to = $this->input->post("to");
 		$details = array(
 			"name" => $name,
+			
 		);
 
 		$data["leads"] = $this->lead->get_all_leads_by_names($details);

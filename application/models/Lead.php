@@ -7,9 +7,15 @@ class Lead extends CI_Model {
     }
 
 
+    // public function get_all_leads_by_names($lead){
+    //     $query = "SELECT leads_id,first_name,last_name,email,CONCAT(first_name,' ',last_name) as full_name, DATE_FORMAT(registered_datetime,'%Y-%m-%d') as date_joined FROM leads WHERE first_name like ? OR last_name like ? AND (registered_datetime >= ? AND registered_datetime <= ?)";
+    //     $values = array("%{$lead['name']}%","%{$lead['name']}%",$lead['from'],$lead['to']);
+    //     return $this->db->query($query,$values)->result_array();
+    // }
+
     public function get_all_leads_by_names($lead){
-        $query = "SELECT leads_id,first_name,last_name,email, DATE_FORMAT(registered_datetime,'%Y-%m-%d') as date_joined FROM leads WHERE first_name like ?";
-        $values = array("%{$lead['name']}%");
+        $query = "SELECT leads_id,first_name,last_name,email,CONCAT(first_name,' ',last_name) as full_name, DATE_FORMAT(registered_datetime,'%Y-%m-%d') as date_joined FROM leads WHERE first_name like ? OR last_name like ?";
+        $values = array("%{$lead['name']}%","%{$lead['name']}%");
         return $this->db->query($query,$values)->result_array();
     }
     // public function get_all_leads(){
