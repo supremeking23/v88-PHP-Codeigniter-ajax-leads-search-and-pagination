@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-class Sample extends CI_Controller {
+date_default_timezone_set('Asia/Manila');
+class Leads extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -18,12 +18,24 @@ class Sample extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
-	{	echo "samplesample sample";
-		$this->load->view('welcome_message');
+    public function index_json(){
+        $data["leads"] = $this->lead->get_all_leads();
+        echo json_encode($data);
+    }
+    
+
+	public function index(){	
+        $this->load->view("leads/index");
 	}
 
-	public function hello(){
-		echo "ova";
+	public function search(){
+		$name = $this->input->post("search");
+		$details = array(
+			"name" => $name,
+		);
+
+		$data["leads"] = $this->lead->get_all_leads_by_names($details);
+		echo json_encode($data);
 	}
+
 }
