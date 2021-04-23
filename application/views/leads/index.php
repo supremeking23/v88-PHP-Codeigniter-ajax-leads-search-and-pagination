@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <title>Leads search and pagination</title>
   </head>
   <body>
@@ -84,7 +84,7 @@
            
 
             $("form").submit(function(){
-                
+                console.log($(this).serialize());
                 $.post($(this).attr('action'), $(this).serialize(), function(res) {
                     let html = ``;
                     for(let i = 0; i < res.leads.length; i++){
@@ -98,13 +98,46 @@
                         html += `</tr>`;
                     }
                     $(".lead_datas").html(html);
+                    console.log(res);
                     
                 },'json');
+                
+                console.log(`console`);
+                console.log('sd',$(this).attr('action'));
 
                 return false;
             });
 
+
+            $("#from").change(function(){
+                // let name = $("#search").val();
+                // let from = $("#from").val();
+                // let to = $("#to").val();
+                // alert(from);
+                
+            });
+
+            // $(".search_date").submit(function(){
+                
                
+            //     $.post(`leads/search_by_date`, $(".search_date").serialize(), function(res) {
+            //         // alert("dotp");
+            //         // alert(from);
+            //         console.log(res);
+            //         let html = ``;
+            //         for(let i = 0; i < res.leads.length; i++){
+            //             // console.log(res.leads[i]);
+            //             html += `<tr>`;
+            //             html += `   <th scope="row">${res.leads[i].leads_id}</th>`;
+            //             html += `   <td>${res.leads[i].first_name}</td>`;
+            //             html += `   <td>${res.leads[i].last_name}</td>`;
+            //             html += `   <td>${res.leads[i].date_joined}</td>`;
+            //             html += `   <td>${res.leads[i].email}</td>`;
+            //             html += `</tr>`;
+            //         }
+            //         $(".lead_datas").html(html);
+            //     },'json');
+            // });
                 
                 
            

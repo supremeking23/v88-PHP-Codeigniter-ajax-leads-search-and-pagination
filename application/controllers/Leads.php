@@ -41,4 +41,20 @@ class Leads extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function search_by_date(){
+		// $name = $this->input->post("search");
+		$from = $this->input->post("from");
+		$to = $this->input->post("to");
+		$details = array(
+			"from" => $from,
+			"to" => $to,
+		);
+
+		$data["leads"] = $this->lead->get_all_leads_by_date($details);
+		echo json_encode($data);
+	}
+
+
+	
+
 }
