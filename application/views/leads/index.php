@@ -27,7 +27,9 @@
                         <li class="page-item disabled">
                             <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                        </li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>
                         <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
@@ -79,6 +81,21 @@
                 }
                 $(".lead_datas").html(html);
             },'json');
+
+
+            $.get("leads/pagination_count",function(res){
+                console.log(res);
+                console.log(res.count_leads[0].page_count);
+                let html = ``;
+                for(let i = 0; i < res.count_leads[0].page_count/50; i++){
+                //     // console.log(res.leads[i]);
+                html += `<li class="page_item">`;
+                html += `   <a class="page-link" href="${i}">${i}</a>`;
+                html += `</li>`;
+                }
+                $(".pagination").html(html);
+            },'json');
+
 
 
            

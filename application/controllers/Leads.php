@@ -41,6 +41,11 @@ class Leads extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function pagination_count(){
+		$data["count_leads"] = $this->lead->get_all_count_leads(); 
+		echo json_encode($data);
+	}
+
 	public function search_by_date(){
 		// $name = $this->input->post("search");
 		$from = $this->input->post("from");
