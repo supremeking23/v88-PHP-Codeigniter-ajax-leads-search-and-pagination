@@ -41,7 +41,7 @@
         </div>
         <div class="row ">
             <div class="col-md-12">
-            <table class="table table-striped ">
+            <table class="table">
                 <thead class="bg-primary text-white"> 
                     <tr>
                     <th scope="col">leads_id</th>
@@ -67,6 +67,7 @@
 
     <script>
         $(document).ready(function(){
+            $('.lead_datas').html(`<tr><td colspan="5" style="text-align:center"><img src='<?= base_url()?>assets/img/loading.gif'></td></tr>`);
             $.get("leads/index_json",function(res){
                 let html = ``;
                 for(let i = 0; i < res.leads.length; i++){
@@ -79,6 +80,7 @@
                     html += `   <td>${res.leads[i].email}</td>`;
                     html += `</tr>`;
                 }
+                $('table').addClass("table-striped");
                 $(".lead_datas").html(html);
             },'json');
 
