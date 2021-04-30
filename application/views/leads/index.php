@@ -31,6 +31,23 @@
                 return html;
             }
 
+            function load_pages(res){
+                // let html = ``;
+                // for(let i = 1; i <= res.count_leads[0].page_count/50; i++){
+                //     html += `<li class="page-item ${(i == 1) ? "active" : ""}">`;
+                //     html += `   <a class="page-link" href="${i}">${i}</a>`;
+                //     html += `</li>`;
+                // }
+                let pagination = ``;
+                    for(let i = 1; i <= res.count_leads[0].page_count/50; i++){
+                        pagination += `<li class="page-item ${(i == res.page) ? "active" : ""}">`;
+                        pagination += `   <a class="page-link" href="${i}">${i}</a>`;
+                        pagination += `</li>`;
+                    }
+                return pagination;
+            }
+
+
             $('.lead_datas').html(`<tr><td colspan="5" style="text-align:center"><img src='<?= base_url()?>assets/img/loading.gif'></td></tr>`);
             $.get("leads/index_json",function(res){
                 let html = load_leads(res);
@@ -40,17 +57,27 @@
 
 
             $.get("leads/pagination_count",function(res){
-                console.log(res);
-                console.log(res.count_leads[0].page_count);
-                let html = ``;
-                for(let i = 0; i < res.count_leads[0].page_count/50; i++){
-                //     // console.log(res.leads[i]);
-                html += `<li class="page_item">`;
-                html += `   <a class="page-link" href="${i}">${i}</a>`;
-                html += `</li>`;
-                }
-                $(".pagination").html(html);
+                let pages = load_pages(res);
+                $(".pagination").html(pages);
             },'json');
+
+            $(document).on('click','.page-link',function(){
+                console.log($(this).attr("href"));
+                let data = {
+                    page: $(this).attr("href"),
+                };
+
+                $('table').removeClass("table-striped");
+                $('.lead_datas').html(`<tr><td colspan="5" style="text-align:center"><img src='<?= base_url()?>assets/img/loading.gif'></td></tr>`);
+                $.post('leads/pagination',data,function(response){
+                    let html = load_leads(response);
+                    $('table').addClass("table-striped");
+                    $(".lead_datas").html(html);
+                    let pages = load_pages(response);
+                    $(".pagination").html(pages);
+                },"json");
+                return false;
+            });
 
             $('#search').on('input',function(event){
                
@@ -176,21 +203,13 @@
 
         <div class="row mt-5">
             <div class="col-md-12">
-                <nav aria-label="Page navigation example">
+                <nav aria-label="navigation">
                     <ul class="pagination justify-content-end">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item">
+                        <li class="page-item active">
                             <a class="page-link" href="#">1</a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                        </li>
                     </ul>
-                    </nav>
+                </nav>
             </div>
         </div>
         <div class="row ">

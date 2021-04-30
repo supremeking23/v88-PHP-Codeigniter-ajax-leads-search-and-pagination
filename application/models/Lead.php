@@ -6,6 +6,12 @@ class Lead extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
+    public function get_all_leads_from_pagination($data){
+        $query = "SELECT leads_id,first_name,last_name,email, DATE_FORMAT(registered_datetime,'%Y-%m-%d') as date_joined FROM leads LIMIT ?,10";
+        $value = array($data["offset"]);
+        return $this->db->query($query,$value)->result_array();
+    }
+
     public function get_all_count_leads(){
         $query = "SELECT COUNT(*) as page_count FROM leads";
         return $this->db->query($query)->result_array();
